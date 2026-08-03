@@ -1,0 +1,50 @@
+# DeepSeekCode 下载页（website/）自动部署到 GitHub Pages
+#
+# 触发: 推送到 main 且改动 website/**（或手动触发）
+#
+# 使用前提:
+#   1. 仓库为公开，或 GitHub Pro 私有仓库也可用 Pages。
+#   2. GitHub → Settings → Pages → Source 选 "GitHub Actions"（本工作流会部署，
+#      无需再选分支/目录）。
+#   3. 发布流程：改 CONFIG.version → push website/ → 本工作流自动上线。
+#   （若面向外部用户且仓库保持私有，建议改用 Cloudflare Pages / Vercel / OSS，
+#     本工作流同样适用——只需换 provider。）
+
+name: Deploy Download Page
+
+on:
+  push:
+    branches: [main]
+    paths: ['website/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: website
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
