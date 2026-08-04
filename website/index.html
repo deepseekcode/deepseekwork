@@ -475,8 +475,8 @@ dscode --help              # 查看全部命令与参数</code></pre>
   /* ═════════ 页面配置：发布前只需修改这里 ═════════ */
   const CONFIG = {
     repo: 'deepseekcode/deepseekwork',       // ← 公开下载仓库（安装包 Releases 所在，见 desktop-release.yml）
-    version: '1.0.7',                        // ← 桌面版版本（与 tauri.conf.json 一致）
-    cliVersion: '1.0.11',                    // ← CLI 版本（对应 npm @deepseekcode/cli / release.yml 的 v* 标签）
+    version: '1.0.7',                        // ← 桌面版【兜底】版本：页面加载时自动从 GitHub Releases 拉取最新，失败时才用此值
+    cliVersion: '1.0.11',                    // ← CLI【兜底】版本：自动从 npm registry 拉取最新，失败时才用此值
     cliPackage: '@deepseekcode/cli',         // ← CLI 的 npm 包名
     downloadBaseUrl: '',                     // ← 留空 = GitHub Releases；填自定义 CDN 前缀
     tagPrefix: 'desktop-v',                  // ← Release tag 前缀（对应 workflow）
@@ -676,7 +676,38 @@ dscode --help              # 查看全部命令与参数</code></pre>
     bindCopyButtons();
   }
 
-  render();
+  /* ── 自动获取最新版本：发布新 Release / npm 新版后，本页无需任何修改 ── */
+  async function resolveLatestVersion() {
+    try {
+      const res = await fetch('https://api.github.com/repos/' + CONFIG.repo + '/releases/latest');
+      if (!res.ok) return false;
+      const data = await res.json();
+      const tag = data.tag_name || '';
+      if (tag.indexOf(CONFIG.tagPrefix) === 0) {
+        CONFIG.version = tag.slice(CONFIG.tagPrefix.length);   // "desktop-v1.0.8" → "1.0.8"
+        return true;
+      }
+    } catch (e) { /* 网络/限流失败 → 沿用兜底版本 */ }
+    return false;
+  }
+
+  async function resolveCliVersion() {
+    try {
+      const res = await fetch('https://registry.npmjs.org/' + CONFIG.cliPackage + '/latest');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.version) CONFIG.cliVersion = data.version;
+    } catch (e) { /* 沿用兜底版本 */ }
+  }
+
+  (async function init() {
+    render();   // ① 先用兜底版本渲染，页面立即可用（离线/限流也不白屏）
+    const [okDesktop, okCli] = await Promise.all([
+      resolveLatestVersion(),   // ② 自动拉 GitHub 最新 desktop-v* tag
+      resolveCliVersion(),      //    自动拉 npm @deepseekcode/cli 最新版本
+    ]);
+    if (okDesktop || okCli) render();   // ③ 拿到最新版本后整体重渲染
+  })();
 </script>
 </body>
 </html>
