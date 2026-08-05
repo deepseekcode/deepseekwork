@@ -467,7 +467,7 @@ dscode --help              # 查看全部命令与参数</code></pre>
   <div class="container">
     <div><b>DeepSeekCode</b> · TypeScript-first AI coding agent</div>
     <div class="mono" id="footer-links"></div>
-    <div>License: Apache-2.0</div>
+    <div>本地运行 · 官方下载</div>
   </div>
 </footer>
 
@@ -476,7 +476,7 @@ dscode --help              # 查看全部命令与参数</code></pre>
   const CONFIG = {
     repo: 'deepseekcode/deepseekwork',       // ← 公开下载仓库（安装包 Releases 所在，见 desktop-release.yml）
     version: '1.0.7',                        // ← 桌面版【兜底】版本：页面加载时自动从 GitHub Releases 拉取最新，失败时才用此值
-    cliVersion: '1.0.11',                    // ← CLI【兜底】版本：自动从 npm registry 拉取最新，失败时才用此值
+    cliVersion: '1.0.12',                    // ← CLI【兜底】版本：自动从 npm registry 拉取最新，失败时才用此值
     cliPackage: '@deepseekcode/cli',         // ← CLI 的 npm 包名
     downloadBaseUrl: '',                     // ← 留空 = GitHub Releases；填自定义 CDN 前缀
     tagPrefix: 'desktop-v',                  // ← Release tag 前缀（对应 workflow）
@@ -639,7 +639,7 @@ dscode --help              # 查看全部命令与参数</code></pre>
     document.getElementById('dl-version').textContent = 'v' + CONFIG.version;
     document.getElementById('footer-links').innerHTML =
       '<a href="' + releaseUrl() + '">GitHub Release</a> · ' +
-      '<a href="https://github.com/' + CONFIG.repo + '">源代码</a> · ' +
+      '<a href="https://github.com/' + CONFIG.repo + '">下载仓库</a> · ' +
       '<a href="https://www.npmjs.com/package/' + CONFIG.cliPackage + '">npm</a>';
 
     const tarSpans = document.querySelectorAll('#cli-ver-tar, #cli-ver-tar-2');
