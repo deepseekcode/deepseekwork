@@ -267,7 +267,7 @@
 
 <header class="hero">
   <div class="container">
-    <div class="badge"><span class="dot"></span><span id="badge-version">v1.0.7</span></div>
+    <div class="badge"><span class="dot"></span><span id="badge-version">v1.0.10</span></div>
     <h1>你的 <span class="grad">本地 AI 编程助手</span><br />代码永远留在你的电脑上</h1>
     <p class="subtitle">
       DeepSeekCode 是一个 TypeScript 优先的 AI 编码智能体 —— 桌面端基于 Tauri 2 构建，
@@ -352,8 +352,8 @@ dscode --version</code></pre>
         <p>从 npm Registry 下载 tarball 后离线安装。</p>
         <div class="code-block">
           <button type="button" class="copy-btn">复制</button>
-<pre><code>curl -fLO https://registry.npmjs.org/@deepseekcode/cli/-/cli-<span id="cli-ver-tar">1.0.11</span>.tgz
-npm install -g ./cli-<span id="cli-ver-tar-2">1.0.11</span>.tgz</code></pre>
+<pre><code>curl -fLO https://registry.npmjs.org/@deepseekcode/cli/-/cli-<span id="cli-ver-tar">1.0.14</span>.tgz
+npm install -g ./cli-<span id="cli-ver-tar-2">1.0.14</span>.tgz</code></pre>
         </div>
         <p class="req">适用于无法直连 npm 镜像的内网 / 离线环境；Windows 可用 <span class="inline-code">Invoke-WebRequest</span> 下载该文件。</p>
       </div>
@@ -393,7 +393,7 @@ dscode --help              # 查看全部命令与参数</code></pre>
   <div class="container">
     <div class="sec-head">
       <h2>下载安装</h2>
-      <p>安装包由 GitHub Actions 自动构建（Tauri 2），当前版本 <span class="inline-code" id="dl-version">v1.0.7</span></p>
+      <p>安装包由 GitHub Actions 自动构建（Tauri 2），当前版本 <span class="inline-code" id="dl-version">v1.0.10</span></p>
     </div>
     <div class="dl-grid" id="dl-grid"><!-- JS 渲染 --></div>
     <div class="notice" id="private-notice" style="display:none">
@@ -475,8 +475,8 @@ dscode --help              # 查看全部命令与参数</code></pre>
   /* ═════════ 页面配置：发布前只需修改这里 ═════════ */
   const CONFIG = {
     repo: 'deepseekcode/deepseekwork',       // ← 公开下载仓库（安装包 Releases 所在，见 desktop-release.yml）
-    version: '1.0.7',                        // ← 桌面版【兜底】版本：页面加载时自动从 GitHub Releases 拉取最新，失败时才用此值
-    cliVersion: '1.0.12',                    // ← CLI【兜底】版本：自动从 npm registry 拉取最新，失败时才用此值
+    version: '1.0.10',                        // ← 桌面版【兜底】版本：页面加载时自动从 GitHub Releases 拉取最新，失败时才用此值
+    cliVersion: '1.0.14',                    // ← CLI【兜底】版本：自动从 npm registry 拉取最新，失败时才用此值
     cliPackage: '@deepseekcode/cli',         // ← CLI 的 npm 包名
     downloadBaseUrl: '',                     // ← 留空 = GitHub Releases；填自定义 CDN 前缀
     tagPrefix: 'desktop-v',                  // ← Release tag 前缀（对应 workflow）
