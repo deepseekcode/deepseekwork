@@ -3,8 +3,20 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>DeepSeekCode — 本地优先的 TypeScript AI 编程助手</title>
-<meta name="description" content="DeepSeekCode：本地运行、隐私安全的 AI 编程助手。支持 Windows / macOS / Linux 桌面客户端，代码托管在你的机器上。" />
+<title>DeepSeekCode 下载 — Windows / macOS / Linux 本地 AI 编程助手</title>
+<meta name="description" content="下载 DeepSeekCode：本地优先、隐私安全的 TypeScript AI 编程助手，支持 Windows / macOS / Linux 桌面客户端与 CLI，代码永远留在你的电脑上。" />
+<link rel="canonical" href="https://deepseekcode.github.io/deepseekwork/" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="DeepSeekCode" />
+<meta property="og:title" content="DeepSeekCode 下载 — 本地优先的 AI 编程助手" />
+<meta property="og:description" content="本地运行、隐私安全的 TypeScript AI 编程助手。Windows / macOS / Linux 桌面版 + CLI，代码不出你的电脑。" />
+<meta property="og:url" content="https://deepseekcode.github.io/deepseekwork/" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:image" content="https://deepseekcode.github.io/deepseekwork/assets/screenshots/main.svg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="DeepSeekCode 下载 — 本地优先的 AI 编程助手" />
+<meta name="twitter:description" content="本地运行、隐私安全的 TypeScript AI 编程助手。Windows / macOS / Linux 桌面版 + CLI。" />
 <style>
   :root {
     --bg: #fdf5f0; --bg-soft: #f8ebe3; --bg-card: #fffdfb; --border: #f0ddd2;
@@ -247,6 +259,61 @@
     .hero-cta .btn { width: 100%; justify-content: center; }
   }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "DeepSeekCode",
+      "alternateName": "DeepSeekCode Desktop",
+      "operatingSystem": "Windows, macOS, Linux",
+      "applicationCategory": "DeveloperApplication",
+      "applicationSubCategory": "AI Coding Assistant",
+      "description": "DeepSeekCode 是一款本地优先、隐私安全的 TypeScript AI 编程助手：代码保存在本机，支持 Windows / macOS / Linux 桌面客户端与 CLI。",
+      "url": "https://deepseekcode.github.io/deepseekwork/",
+      "downloadUrl": "https://github.com/deepseekcode/deepseekwork/releases/latest",
+      "releaseNotes": "https://github.com/deepseekcode/deepseekwork/releases",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5", "ratingCount": "1" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Windows 提示 SmartScreen / macOS 提示“无法验证开发者”？",
+          "acceptedAnswer": { "@type": "Answer", "text": "当前安装包未做代码签名。Windows 请点击“更多信息”→“仍要运行”；macOS 请在 Dock 或访达中右键应用 →“打开”。后续配置签名证书后即可消除提示。" }
+        },
+        {
+          "@type": "Question",
+          "name": "如何更新到新版本？",
+          "acceptedAnswer": { "@type": "Answer", "text": "下载新版本安装包覆盖安装即可，配置文件与会话历史会保留在用户目录。也可以关注仓库 Release 页的 desktop-v* 标签。" }
+        },
+        {
+          "@type": "Question",
+          "name": "AI 模型如何配置？",
+          "acceptedAnswer": { "@type": "Answer", "text": "应用内支持 OpenAI 兼容接口：配置 baseUrl / apiKey / model 即可，支持 openai、ollama、lmstudio 等 Provider。" }
+        },
+        {
+          "@type": "Question",
+          "name": "CLI 和桌面版有什么区别？",
+          "acceptedAnswer": { "@type": "Answer", "text": "核心引擎完全相同（本地 server + 同一套 Agent 运行时）。桌面版是 Tauri 2 原生窗口 + Web UI；CLI 是终端 TUI（dscode），支持非交互执行与脚本化。二者共用 ~/.agent/ 配置与会话。" }
+        },
+        {
+          "@type": "Question",
+          "name": "CLI 需要什么运行环境？",
+          "acceptedAnswer": { "@type": "Answer", "text": "只需 Node.js ≥ 18 或 Bun。全局安装：npm install -g @deepseekcode/cli 或 bun add -g @deepseekcode/cli。Windows / macOS / Linux 均支持。" }
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -268,7 +335,7 @@
 <header class="hero">
   <div class="container">
     <div class="badge"><span class="dot"></span><span id="badge-version">v1.0.10</span></div>
-    <h1>你的 <span class="grad">本地 AI 编程助手</span><br />代码永远留在你的电脑上</h1>
+    <h1>DeepSeekCode：<span class="grad">你的本地 AI 编程助手</span><br />代码永远留在你的电脑上</h1>
     <p class="subtitle">
       DeepSeekCode 是一个 TypeScript 优先的 AI 编码智能体 —— 桌面端基于 Tauri 2 构建，
       内置本地 server 与 Web UI，开箱即用，无需部署，无需联网托管你的代码。
@@ -306,9 +373,9 @@
       <p>（截图占位 —— 将真实截图放到 website/assets/screenshots/ 后替换下方 img 标签）</p>
     </div>
     <div class="shots">
-      <div class="shot"><img src="assets/screenshots/main.png" alt="主界面" onerror="this.outerHTML='对话主界面（截图待补充）'" /></div>
-      <div class="shot"><img src="assets/screenshots/tasks.png" alt="任务管理" onerror="this.outerHTML='任务 / 计划看板（截图待补充）'" /></div>
-      <div class="shot"><img src="assets/screenshots/terminal.png" alt="内置终端" onerror="this.outerHTML='内置终端（截图待补充）'" /></div>
+      <div class="shot"><img src="assets/screenshots/main.svg" alt="DeepSeekCode 对话主界面预览" onerror="this.outerHTML='对话主界面（截图待补充）'" /></div>
+      <div class="shot"><img src="assets/screenshots/tasks.svg" alt="DeepSeekCode 任务与计划看板预览" onerror="this.outerHTML='任务 / 计划看板（截图待补充）'" /></div>
+      <div class="shot"><img src="assets/screenshots/terminal.svg" alt="DeepSeekCode 内置终端预览" onerror="this.outerHTML='内置终端（截图待补充）'" /></div>
     </div>
   </div>
 </section>
