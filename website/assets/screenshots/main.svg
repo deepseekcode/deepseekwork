@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" font-family="system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fde3bd"/><stop offset=".5" stop-color="#e8a76b"/><stop offset="1" stop-color="#d17a44"/>
+    </linearGradient>
+    <linearGradient id="bubble" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fde8c9"/><stop offset="1" stop-color="#f7d9b0"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="600" rx="14" fill="#fdf5f0"/>
+  <rect width="960" height="600" rx="14" fill="none" stroke="#f0ddd2" stroke-width="1.5"/>
+
+  <!-- title bar -->
+  <rect x="0" y="0" width="960" height="44" rx="14" fill="#f8ebe3"/>
+  <rect x="0" y="30" width="960" height="14" fill="#f8ebe3"/>
+  <circle cx="22" cy="22" r="6" fill="#f2a08c"/>
+  <circle cx="40" cy="22" r="6" fill="#f2cf8c"/>
+  <circle cx="58" cy="22" r="6" fill="#a8c99a"/>
+  <text x="480" y="27" text-anchor="middle" font-size="13" fill="#9a8678">DeepSeekCode — Chat</text>
+
+  <!-- sidebar -->
+  <rect x="0" y="44" width="216" height="556" fill="#f8ebe3"/>
+  <rect x="0" y="44" width="216" height="556" fill="none" stroke="#f0ddd2"/>
+  <rect x="14" y="60" width="26" height="26" rx="7" fill="url(#accent)"/>
+  <text x="27" y="78" text-anchor="middle" font-size="12" font-weight="800" fill="#2a1a0d">DS</text>
+  <text x="48" y="78" font-size="14" font-weight="700" fill="#4a332b">DeepSeekCode</text>
+
+  <rect x="14" y="96" width="188" height="28" rx="8" fill="#fffdfb" stroke="#f0ddd2"/>
+  <text x="26" y="115" font-size="12" fill="#b3a294">🔍 Search sessions…</text>
+
+  <rect x="14" y="134" width="188" height="42" rx="9" fill="#fffdfb" stroke="#e8a76b"/>
+  <text x="26" y="152" font-size="12.5" font-weight="600" fill="#4a332b">Fix login page type error</text>
+  <text x="26" y="168" font-size="10.5" fill="#b3a294">2h ago · 12 messages</text>
+
+  <rect x="14" y="184" width="188" height="42" rx="9" fill="transparent"/>
+  <text x="26" y="202" font-size="12.5" fill="#4a332b">Refactor CLI parsing</text>
+  <text x="26" y="218" font-size="10.5" fill="#b3a294">Yesterday · 8 messages</text>
+
+  <rect x="14" y="234" width="188" height="42" rx="9" fill="transparent"/>
+  <text x="26" y="252" font-size="12.5" fill="#4a332b">Write deploy script</text>
+  <text x="26" y="268" font-size="10.5" fill="#b3a294">3 days ago · 5 messages</text>
+
+  <rect x="14" y="556" width="188" height="34" rx="9" fill="#fffdfb" stroke="#f0ddd2"/>
+  <text x="26" y="577" font-size="12" fill="#4a332b">⚙️ Settings</text>
+
+  <!-- main header -->
+  <text x="240" y="76" font-size="16" font-weight="700" fill="#4a332b">Chat</text>
+  <rect x="300" y="60" width="168" height="24" rx="12" fill="#fde8c9"/>
+  <text x="384" y="76" text-anchor="middle" font-size="11.5" fill="#cf6f3a">🤖 deepseek-chat</text>
+
+  <!-- user message -->
+  <rect x="560" y="104" width="360" height="54" rx="14" fill="url(#bubble)"/>
+  <text x="580" y="128" font-size="13.5" fill="#4a332b">Fix this TypeScript type error:</text>
+  <text x="580" y="147" font-size="12.5" font-family="ui-monospace, 'Cascadia Code', Consolas, monospace" fill="#7a5a3a">const x: number = "hello";</text>
+
+  <!-- AI message 1 -->
+  <rect x="240" y="178" width="680" height="152" rx="14" fill="#fffdfb" stroke="#f0ddd2"/>
+  <text x="260" y="202" font-size="13.5" fill="#4a332b">Found it: <tspan font-weight="700">type mismatch</tspan>. Fix:</text>
+  <rect x="260" y="214" width="640" height="66" rx="9" fill="#2a1a0d"/>
+  <text x="278" y="236" font-size="12" font-family="ui-monospace, 'Cascadia Code', Consolas, monospace" fill="#f7d9b0">// Option 1: type assertion</text>
+  <text x="278" y="254" font-size="12" font-family="ui-monospace, 'Cascadia Code', Consolas, monospace" fill="#e8e0d8">const x = "hello" as unknown as number;</text>
+  <text x="278" y="270" font-size="12" font-family="ui-monospace, 'Cascadia Code', Consolas, monospace" fill="#9a8678">// or use a union type</text>
+  <text x="260" y="300" font-size="12.5" fill="#7aa863">✓ Fix applied, tests pass</text>
+
+  <!-- AI message 2 -->
+  <rect x="240" y="350" width="680" height="122" rx="14" fill="#fffdfb" stroke="#f0ddd2"/>
+  <text x="260" y="374" font-size="13.5" fill="#4a332b">Changes made:</text>
+  <circle cx="272" cy="396" r="4" fill="#e8904a"/><text x="284" y="400" font-size="12.5" fill="#4a332b">Fixed type declaration in <tspan font-family="ui-monospace, 'Cascadia Code', Consolas, monospace">src/types.ts</tspan></text>
+  <circle cx="272" cy="420" r="4" fill="#e8904a"/><text x="284" y="424" font-size="12.5" fill="#4a332b">Enabled strict mode in <tspan font-family="ui-monospace, 'Cascadia Code', Consolas, monospace">tsconfig.json</tspan></text>
+  <circle cx="272" cy="444" r="4" fill="#e8904a"/><text x="284" y="448" font-size="12.5" fill="#4a332b"><tspan font-family="ui-monospace, 'Cascadia Code', Consolas, monospace">npm test</tspan> all green ✓</text>
+
+  <!-- input -->
+  <rect x="240" y="502" width="680" height="52" rx="14" fill="#fffdfb" stroke="#e8a76b"/>
+  <text x="260" y="533" font-size="13" fill="#b3a294">Type a message, or / for slash commands…</text>
+  <rect x="856" y="512" width="48" height="32" rx="9" fill="url(#accent)"/>
+  <text x="880" y="533" text-anchor="middle" font-size="13" fill="#2a1a0d">➤</text>
+</svg>

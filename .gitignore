@@ -1,1 +1,4 @@
 .agent/
+
+# Windows 误创建的垃圾文件
+/nul

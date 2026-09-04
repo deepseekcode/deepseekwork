@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" font-family="ui-monospace, 'Cascadia Code', Consolas, monospace">
+  <rect width="960" height="600" rx="14" fill="#221812"/>
+  <rect width="960" height="600" rx="14" fill="none" stroke="#3a2a1e" stroke-width="1.5"/>
+
+  <!-- title bar -->
+  <rect x="0" y="0" width="960" height="44" rx="14" fill="#1a120c"/>
+  <rect x="0" y="30" width="960" height="14" fill="#1a120c"/>
+  <circle cx="22" cy="22" r="6" fill="#f2a08c"/>
+  <circle cx="40" cy="22" r="6" fill="#f2cf8c"/>
+  <circle cx="58" cy="22" r="6" fill="#a8c99a"/>
+  <text x="480" y="27" text-anchor="middle" font-size="13" fill="#9a8678">dscode — zsh</text>
+
+  <text x="32" y="86" font-size="14" fill="#f7d9b0" font-weight="700">❯ dscode</text>
+  <text x="32" y="112" font-size="13.5" fill="#b3a294">⚡ DeepSeekCode CLI v1.0.14 — local server started at 127.0.0.1:39271</text>
+
+  <text x="32" y="146" font-size="14" fill="#f7d9b0" font-weight="700">❯ dscode exec "fix typos in README"</text>
+  <text x="32" y="172" font-size="13.5" fill="#7aa863">✓ Fixed 3 typos in README.md</text>
+
+  <text x="32" y="206" font-size="14" fill="#f7d9b0" font-weight="700">❯ dscode codeview</text>
+  <text x="32" y="232" font-size="13.5" fill="#b3a294">🔍 Review: 2 potential bugs found</text>
+
+  <!-- code frame -->
+  <rect x="32" y="248" width="560" height="120" rx="8" fill="#1a120c" stroke="#3a2a1e"/>
+  <text x="48" y="274" font-size="13" fill="#e8904a">┌─ src/main.ts:42 ─────────────────────┐</text>
+  <text x="48" y="298" font-size="13" fill="#e8e0d8">│ 42  const user = null;               │</text>
+  <text x="48" y="322" font-size="13" fill="#e8e0d8">│ 43  user.name;  <tspan fill="#f2a08c">// ⚠ possible null</tspan> │</text>
+  <text x="48" y="346" font-size="13" fill="#e8904a">└──────────────────────────────────────┘</text>
+
+  <text x="32" y="392" font-size="13.5" fill="#b3a294">→ Suggest adding a null check before accessing <tspan fill="#f7d9b0">user.name</tspan></text>
+
+  <text x="32" y="426" font-size="14" fill="#f7d9b0" font-weight="700">❯ dscode --resume</text>
+  <text x="32" y="452" font-size="13.5" fill="#7aa863">✓ Session restored (12 messages)</text>
+
+  <text x="32" y="486" font-size="14" fill="#f7d9b0" font-weight="700">❯ dscode /plan</text>
+  <text x="32" y="512" font-size="13.5" fill="#b3a294">→ Plan mode · task board ready</text>
+
+  <text x="32" y="552" font-size="14" fill="#f7d9b0" font-weight="700">❯ <tspan fill="#e8904a">█</tspan></text>
+</svg>
