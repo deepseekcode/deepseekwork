@@ -1,4 +1,50 @@
+# DeepSeekCode project page — https://deepseekcode.github.io/deepseekwork/
+#
+# Everything on this static site may be crawled, indexed and quoted, including by AI and
+# LLM crawlers. A machine-readable project summary for LLMs lives at:
+#   https://deepseekcode.github.io/deepseekwork/llms.txt
+
 User-agent: *
+Allow: /
+
+# ---- AI / LLM crawlers explicitly allowed ----
+# Listed individually so the permission is unambiguous even when a crawler only reads
+# its own group.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
 Allow: /
 
 Sitemap: https://deepseekcode.github.io/deepseekwork/sitemap.xml

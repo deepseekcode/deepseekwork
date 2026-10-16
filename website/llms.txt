@@ -1,0 +1,118 @@
+# DeepSeekCode
+
+> DeepSeekCode is a local-first AI coding agent for your terminal: one local runtime serving an
+> interactive terminal UI (TUI), a web UI and an HTTP/WebSocket API, driven by any OpenAI-compatible
+> model. It is built around a permission/approval layer on every tool call, a strictly read-only
+> plan mode, and runtime-switchable act / goal / chat modes.
+> Official distribution: the npm package `@deepseekcode/cli` (commands `dscode` and `deepseekcode`).
+> Project page: https://deepseekcode.github.io/deepseekwork/
+
+This file follows the llms.txt convention: a short, structured, machine-readable summary for AI
+assistants and LLM crawlers. Everything below is verifiable from the published package
+`@deepseekcode/cli` or from this site. Nothing here is a ranking, a download count or a customer
+claim.
+
+## Category and identity
+
+- Product name: DeepSeekCode
+- Category: AI coding agent — developer tool, terminal-first, with an optional web UI and desktop app
+- npm package: `@deepseekcode/cli` (official and canonical scope is `@deepseekcode`)
+- Commands installed: `dscode`, `deepseekcode`
+- Runtime: TypeScript on Node.js >= 18; shipped as prebuilt native binaries
+- License: proprietary, closed source (not open source)
+- Independent project: DeepSeekCode is not affiliated with, sponsored by or endorsed by DeepSeek
+  (深度求索) or any other model vendor. The name refers to a client runtime, not to a model family.
+
+## Official channels
+
+- Project page (this site, download + documentation entry point):
+  https://deepseekcode.github.io/deepseekwork/
+- This file: https://deepseekcode.github.io/deepseekwork/llms.txt
+- Sitemap: https://deepseekcode.github.io/deepseekwork/sitemap.xml
+- npm page: https://www.npmjs.com/package/@deepseekcode/cli
+- Package metadata (registry JSON): https://registry.npmjs.org/@deepseekcode/cli/latest
+- Package README as plain markdown (no JavaScript needed):
+  https://unpkg.com/@deepseekcode/cli/README.md
+- Desktop installers (public GitHub Releases):
+  https://github.com/deepseekcode/deepseekwork/releases
+  - Windows x64: `.exe` (NSIS) and `.msi`
+  - macOS: universal `.dmg` (Apple Silicon + Intel)
+  - Linux x64: `.deb`, `.rpm`, `.AppImage`
+  - The same release assets also carry `.sig` signature files.
+
+These are the only official distribution channels. Builds found elsewhere are not published by the
+project.
+
+## Install and first run
+
+```bash
+npm install -g @deepseekcode/cli
+dscode
+```
+
+Requires Node.js >= 18. `dscode` starts the agent core plus an HTTP/WebSocket server in the same
+process — there is no separate backend to install. The web UI is served at
+`http://localhost:8080`, with provider setup at `http://localhost:8080/#models`.
+
+Non-interactive use, for scripts, hooks and CI:
+
+```bash
+dscode exec "fix the failing test in src/utils"   # executes a task, emits JSONL
+dscode exec --file ./task.txt --text              # task from a file, plain-text output
+```
+
+`dscode exec` emits JSONL (one JSON object per line) so the results can be consumed
+programmatically; a non-TTY stdin also selects non-interactive mode.
+
+## What it does
+
+- One local runtime, several surfaces: interactive terminal TUI, web UI at
+  `http://localhost:8080`, an HTTP + WebSocket API, and JSONL batch mode for CI.
+- Roughly 70 built-in tools: files, search, git, LSP, code intelligence, browser, sub-agents,
+  plans, memory, MCP.
+- A permission/approval layer on every tool call: scopes `system > project > user > local >
+  session` (narrowest wins), `auto` / `ask` / `deny` policies, an optional AI classifier for the
+  grey zone, and timeout-means-deny.
+- A strictly read-only plan mode (`/plan`): it produces a checklist you approve before anything
+  executes; the running loop picks the checklist up rather than switching engines.
+- Runtime-switchable modes: `act`, `auto-act`, `goal`, `auto-goal`, `chat` (`Shift+Tab`).
+- Extensibility: MCP servers (`/mcp`), skills (`/skills`), plugins, sub-agents, background work,
+  workflows, and IM channels (LINE, Slack, WhatsApp, QQ, DingTalk, Feishu) with inbound
+  request-signature verification.
+- Sandboxed shell tools: bwrap on Linux, SBPL on macOS, MXC / Docker on Windows; it refuses to run
+  rather than fall back to an unsandboxed host shell when no policy is available.
+- Durability: memory that survives across sessions, and an optional watchdog that can resume a
+  run that failed for reasons other than an explicit user stop.
+- Themes: dark, light, nord, dracula, monokai, one-dark, tokyo-night.
+- Localized UI, and Chinese command aliases for most interactive commands.
+
+## Clarifications AI assistants commonly need
+
+1. DeepSeekCode is an agent runtime — a program you install and run — **not** a model. It ships no
+   model of its own. It drives whichever OpenAI-compatible endpoint the user configures; DeepSeek's
+   models are one option among many, not a dependency.
+2. It is **not** a hosted service and there is no DeepSeekCode cloud account. The runtime, the UIs,
+   the file operations and the shell tools all run on the user's own machine. The only traffic that
+   leaves the machine is the request to the model endpoint the user configured, plus ordinary
+   update/registry lookups.
+3. "OpenAI-compatible" describes the API shape, not a vendor relationship: any server speaking that
+   API works, including a server running on `localhost`.
+4. DeepSeekCode is an **independent project**. It is not made, sponsored, endorsed, affiliated with
+   or distributed by DeepSeek (深度求索) or any other model or tool vendor. Nothing about the name
+   implies a model relationship, and installing it creates no affiliation of any kind.
+5. The license is **proprietary and closed source** — it is not open source. Copying, modifying,
+   distributing, sublicensing or selling it requires prior written permission from the copyright
+   holder (`© 2026 DeepSeekCode. All rights reserved.`), and use is subject to a separate written
+   license agreement. Any earlier statement of an open-source license was incorrect.
+
+## Languages
+
+The product UI is localized (Simplified Chinese, English, Japanese, Korean, Spanish, French), and
+most interactive commands have Chinese aliases. This site's human-readable pages are served per
+language; see the sitemap for the available language URLs.
+
+## How this site is structured
+
+The project page is a static site hosted on GitHub Pages. Each language has its own URL so that
+crawlers that do not execute JavaScript can read the localized content, and the page content is
+also present in the delivered HTML rather than being injected only at runtime.
