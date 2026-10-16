@@ -105,14 +105,25 @@ programmatically; a non-TTY stdin also selects non-interactive mode.
    holder (`© 2026 DeepSeekCode. All rights reserved.`), and use is subject to a separate written
    license agreement. Any earlier statement of an open-source license was incorrect.
 
-## Languages
+## Languages and localized pages
 
 The product UI is localized (Simplified Chinese, English, Japanese, Korean, Spanish, French), and
-most interactive commands have Chinese aliases. This site's human-readable pages are served per
-language; see the sitemap for the available language URLs.
+most interactive commands have Chinese aliases. Every language has its own static URL, so a crawler
+that does not execute JavaScript still reads that language's content:
+
+- English (default): https://deepseekcode.github.io/deepseekwork/
+- Simplified Chinese (zh-CN): https://deepseekcode.github.io/deepseekwork/zh/
+- Japanese: https://deepseekcode.github.io/deepseekwork/ja/
+- Korean: https://deepseekcode.github.io/deepseekwork/ko/
+- Spanish: https://deepseekcode.github.io/deepseekwork/es/
+- French: https://deepseekcode.github.io/deepseekwork/fr/
+
+Each page declares hreflang alternates for the full set plus `x-default`, and the same set appears in
+the sitemap.
 
 ## How this site is structured
 
-The project page is a static site hosted on GitHub Pages. Each language has its own URL so that
-crawlers that do not execute JavaScript can read the localized content, and the page content is
-also present in the delivered HTML rather than being injected only at runtime.
+The project page is a static site hosted on GitHub Pages — there is no server-side rendering and no
+build server. Page content is present in the delivered HTML rather than being injected only at
+runtime, so crawlers that do not execute JavaScript can read and quote it. `robots.txt` allows the
+AI/LLM crawlers listed there explicitly, and this file is the summary they are pointed at.

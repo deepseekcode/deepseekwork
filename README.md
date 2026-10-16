@@ -8,6 +8,9 @@
 ## 内容
 
 - `website/` — 静态单文件下载页（来源：源仓库 `deepseekcode/deepseekcode` 的 `website/` 目录）
+- `website/llms.txt` — 给 AI/LLM 爬虫的机器可读项目摘要（llmstxt.org 约定）
+- `website/zh|ja|ko|es|fr/` — 各语言静态页（**自动生成，请勿手改**，见下）
+- `website/tools/gen-locales.mjs` — 语言页生成器
 - `.github/workflows/pages-deploy.yml` — 推送 `website/` 时自动部署到 GitHub Pages
 
 ## 如何更新
@@ -22,7 +25,9 @@
 **修改页面本身（样式/文案/结构）：**
 
 1. 在源仓库 `deepseekcode/deepseekcode` 修改 `website/index.html`
-2. 把最新 `website/` 同步回本仓库并推送 → Pages 自动更新
+   - 文案改 `EN` / `OV` 字典里的值即可；页面上 58 处静态文本（标题、卡片、FAQ、安装命令等）是**预渲染快照**，`render()` 会在浏览器里用同一份字典覆盖它，两边永远一致
+2. 若改了文案/字典，**重新生成语言页**：`node website/tools/gen-locales.mjs`（复用 `index.html` 里的同一份 i18n 字典，未翻译的键回退英文）
+3. 把最新 `website/` 同步回本仓库并推送 → Pages 自动更新
 
 **安装包** 由源仓库的 `desktop-release` workflow 构建后自动上传到本仓库 Releases（tag: `desktop-v*`）。
 
