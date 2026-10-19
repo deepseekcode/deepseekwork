@@ -2,3 +2,10 @@
 
 # Windows 误创建的垃圾文件
 /nul
+
+# 本地临时探测脚本
+/.argprobe.js
+
+# 根目录截图副本（正式素材在 website/assets/screenshots/）
+/cli.png
+/web.png
