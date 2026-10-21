@@ -1,0 +1,24 @@
+# 宣传录制专用配置：指向本地 mock OpenAI 端点。
+# 用完即弃，绝不碰用户真实的 ~/.agent/config.yaml。
+active: promo
+model: promo-model
+
+providers:
+  - key: promo
+    name: Promo Mock
+    baseUrl: http://127.0.0.1:3199/v1
+    apiKeys:
+      - sk-promo-local-only
+    apiType: openai-completions
+    contextWindow: 200000
+    maxTokens: 64000
+    models:
+      - promo-model
+
+settings:
+  language: en
+  sandbox:
+    backend: none
+    policy: workspace-write
+  web:
+    theme: dark
