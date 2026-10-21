@@ -18,7 +18,7 @@
   # 看最近 7 天新增（需要至少有 2 个不同日期的快照）
   powershell -File scripts\gh-download-stats.ps1 -Report 7
 
-  # 打点 + 直接出 7 天报告（每日计划任务用这条）
+  # 打点 + 直接出 7 天报告
   powershell -File scripts\gh-download-stats.ps1 -Snapshot -Report 7
 #>
 [CmdletBinding()]
@@ -26,6 +26,7 @@ param(
     [string]$Repo = 'deepseekcode/deepseekwork',
     [int]$Report = 0,
     [switch]$Snapshot,
+    [switch]$Quiet,
     [string]$Data,
     [int]$MaxReleases = 100
 )
@@ -33,22 +34,24 @@ param(
 $ErrorActionPreference = 'Stop'
 if (-not $Data) {
     $root = Split-Path -Parent $PSScriptRoot
-    $Data = Join-Path $root '.gh-stats\downloads.csv'
+    $Data = Join-Path (Join-Path $root '.gh-stats') 'downloads.csv'
 }
 
 function Get-Releases {
     param([string]$Repo, [int]$Max)
-    $hasGh = $false
+    $token = $env:GH_TOKEN
+    if (-not $token) { $token = $env:GITHUB_TOKEN }
+    # 优先 gh CLI（本地已登录 / CI 里由 GH_TOKEN 提供凭据），失败再退回 REST
     if (Get-Command gh -ErrorAction SilentlyContinue) {
-        gh auth status 2>&1 | Out-Null
-        if ($LASTEXITCODE -eq 0) { $hasGh = $true }
-    }
-    if ($hasGh) {
-        $json = gh api "repos/$Repo/releases?per_page=$Max" 2>$null
-        if ($LASTEXITCODE -ne 0 -or -not $json) { throw "gh api 调用失败，请检查网络或 gh auth 状态" }
-        return $json | ConvertFrom-Json
+        try {
+            $json = gh api "repos/$Repo/releases?per_page=$Max" 2>$null
+            if ($LASTEXITCODE -eq 0 -and $json) { return $json | ConvertFrom-Json }
+        } catch {
+            # gh 未登录或不可用，走下面的 REST 分支
+        }
     }
     $headers = @{ 'User-Agent' = 'gh-download-stats'; 'Accept' = 'application/vnd.github+json' }
+    if ($token) { $headers['Authorization'] = "Bearer $token" }
     return Invoke-RestMethod -Headers $headers -Uri "https://api.github.com/repos/$Repo/releases?per_page=$Max"
 }
 
@@ -82,8 +85,6 @@ foreach ($rel in $releases) {
     }
 }
 
-$isRealAsset = { param($p) $p -ne 'updater' }
-
 # ---------- 1. 快照 ----------
 if ($Snapshot) {
     $today = (Get-Date).ToString('yyyy-MM-dd')
@@ -101,16 +102,20 @@ if ($Snapshot) {
         }
     }
     $all = @($existing) + @($new)
-    $all | Sort-Object date, tag, asset | Export-Csv -Path $Data -NoTypeInformation -Encoding UTF8
+    $csv = ($all | Sort-Object date, tag, asset | ConvertTo-Csv -NoTypeInformation) -join "`n"
+    # 固定 UTF-8 无 BOM + LF：Windows 本地写入与 CI 写入不会在 git diff 里来回抖动
+    [System.IO.File]::WriteAllText($Data, $csv + "`n", (New-Object System.Text.UTF8Encoding($false)))
     Write-Host "快照已写入 $Data （今日 $($new.Count) 条）" -ForegroundColor Green
 }
+
+# CI 里只要快照结果，不必把几十行累计表刷进日志
+if ($Quiet -and $Report -le 0) { return }
 
 # ---------- 2. 当前累计 ----------
 Write-Host ""
 Write-Host "== $Repo  累计下载（$(Get-Date -Format 'yyyy-MM-dd HH:mm')）" -ForegroundColor Cyan
 Write-Host ""
 
-$latestTag = $rows | Select-Object -First 1 -ExpandProperty tag
 $reportTags = $rows | Group-Object tag | ForEach-Object { $_.Name }
 
 foreach ($tag in $reportTags) {

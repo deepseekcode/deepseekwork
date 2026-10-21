@@ -10,5 +10,6 @@
 /cli.png
 /web.png
 
-# 下载量快照数据（本地打点，不纳入版本库）
-/.gh-stats/
+# 下载量快照数据：只把主档纳入版本库（供 Actions 每日提交），其余本地产物忽略
+/.gh-stats/*
+!/.gh-stats/downloads.csv

@@ -1,0 +1,55 @@
+# Release 下载量每日快照
+#
+# 背景: GitHub 只提供每个资产的「累计」download_count，没有历史时间序列。
+#       本工作流每天把累计值打点进 .gh-stats/downloads.csv 并提交回仓库，
+#       「最近 N 天新增了多少」才是可算的量。
+#
+# 产出: .gh-stats/downloads.csv  (date,repo,tag,published,asset,platform,count)
+# 查询: powershell -File scripts\gh-download-stats.ps1 -Report 7
+#
+# 说明:
+#   - cron 只认 UTC，30 1 * * * = 北京时间每天 09:30。
+#   - 同一天重复跑会覆盖当天该日期的行，不会重复累加（脚本内按 date 去重）。
+#   - 需要 main 允许 GITHUB_TOKEN 直接 push；若开了分支保护，改用 PR 流程。
+
+name: Release Download Stats
+
+on:
+  schedule:
+    - cron: '30 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-download-stats
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Snapshot download counts
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # 固定时区，保证快照日期按北京时间归日（runner 默认 UTC）
+          TZ: Asia/Shanghai
+        run: ./scripts/gh-download-stats.ps1 -Snapshot -Quiet
+
+      - name: Commit snapshot
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .gh-stats/downloads.csv
+          if git diff --cached --quiet; then
+            echo "今日数据无变化，跳过提交"
+            exit 0
+          fi
+          git commit -m "chore(stats): $(date -u +%F) release 下载量快照"
+          git push
