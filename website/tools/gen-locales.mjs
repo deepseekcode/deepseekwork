@@ -117,7 +117,7 @@ const GRIDS = {
     const row = (x) => '<div class="eco-row"><div class="symbol">' + x[0] + '</div><div><strong>' + escHtml(x[1]) + '</strong><span>' + escHtml(x[2]) + '</span></div></div>';
     return (
       '<article class="eco"><h3>' + escHtml(T('ecoTitle')) + '</h3><p>' + escHtml(T('ecoDesc')) + '</p>' + T('eco').slice(0, 2).map(row).join('') + '</article>' +
-      '<article class="eco"><h3>Context + extensibility</h3><p>Compose capabilities so the agent grows with your project.</p>' + T('eco').slice(2).map(row).join('') + '</article>'
+      '<article class="eco"><h3>' + escHtml(T('ecoTitle2')) + '</h3><p>' + escHtml(T('ecoDesc2')) + '</p>' + T('eco').slice(2).map(row).join('') + '</article>'
     );
   },
   faqList: (T) => T('faq').map((x) => '<details><summary>' + escHtml(x[0]) + '</summary><p>' + escHtml(x[1]) + '</p></details>').join(''),
@@ -179,12 +179,21 @@ function main() {
 
     // 5. structured data: same entity, this page's language
     const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
-    if (blocks.length !== 2) throw new Error('expected 2 JSON-LD blocks, got ' + blocks.length);
+    if (blocks.length !== 5) throw new Error('expected 5 JSON-LD blocks, got ' + blocks.length);
     for (const block of blocks) {
       const obj = JSON.parse(block[1]);
-      obj.description = S('desc');
+      if ('description' in obj) obj.description = S('desc');
       // only claim the locale when the FAQ content itself is localized
       obj.inLanguage = obj['@type'] === 'FAQPage' ? (Array.isArray(overrides.faq) ? locale : 'en') : locale;
+      // HowTo 的每个字段都与页面可见文案同源，可以整体本地化
+      if (obj['@type'] === 'HowTo') {
+        obj.name = S('cliHeading');
+        obj.description = S('cliIntro');
+        obj.step = [
+          { '@type': 'HowToStep', name: S('npmTitle'), text: S('npmDesc'), url: BASE + dir + '/#cli' },
+          { '@type': 'HowToStep', name: S('startTitle'), text: S('startDesc'), url: BASE + dir + '/#cli' },
+        ];
+      }
       const next = '<script type="application/ld+json">' + JSON.stringify(obj, null, 2).split('\n').join('\r\n') + '</script>';
       html = rep(html, block[0], next, 'json-ld ' + obj['@type']);
     }

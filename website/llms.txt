@@ -127,3 +127,8 @@ The project page is a static site hosted on GitHub Pages — there is no server-
 build server. Page content is present in the delivered HTML rather than being injected only at
 runtime, so crawlers that do not execute JavaScript can read and quote it. `robots.txt` allows the
 AI/LLM crawlers listed there explicitly, and this file is the summary they are pointed at.
+
+Each page carries five JSON-LD blocks — `SoftwareApplication` (platforms, install URL, feature list,
+screenshots), `WebSite`, `Organization`, `HowTo` (CLI install) and `FAQPage`. `inLanguage` is only set
+to a locale when that page's copy is actually translated, so a crawler never sees a language claim
+the delivered HTML does not back up.
