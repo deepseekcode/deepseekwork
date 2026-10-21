@@ -9,3 +9,6 @@
 # 根目录截图副本（正式素材在 website/assets/screenshots/）
 /cli.png
 /web.png
+
+# 下载量快照数据（本地打点，不纳入版本库）
+/.gh-stats/
