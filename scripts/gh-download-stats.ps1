@@ -105,7 +105,7 @@ if ($Snapshot) {
     $csv = ($all | Sort-Object date, tag, asset | ConvertTo-Csv -NoTypeInformation) -join "`n"
     # 固定 UTF-8 无 BOM + LF：Windows 本地写入与 CI 写入不会在 git diff 里来回抖动
     [System.IO.File]::WriteAllText($Data, $csv + "`n", (New-Object System.Text.UTF8Encoding($false)))
-    Write-Host "快照已写入 $Data （今日 $($new.Count) 条）" -ForegroundColor Green
+    Write-Host "快照已写入 $Data （今日 $($new.Count) 条 / $((@($rows | Select-Object -ExpandProperty tag -Unique)).Count) 个 release）" -ForegroundColor Green
 }
 
 # CI 里只要快照结果，不必把几十行累计表刷进日志
@@ -154,8 +154,17 @@ if ($Report -gt 0) {
     $baseDate = ($dates | Where-Object { $_ -le $cut } | Select-Object -Last 1)
     if (-not $baseDate) { $baseDate = $dates[0] }
     $nowDate = $dates[-1]
+    # 基线必须早于最新一天：今天还没打点时 $cut 会落到最新日期上，
+    # 那样算出来会是「0 新增」，把「没有可比区间」误报成「零增长」。
+    if ($baseDate -ge $nowDate) {
+        $baseDate = ($dates | Where-Object { $_ -lt $nowDate } | Select-Object -Last 1)
+    }
     $span = ([datetime]$nowDate - [datetime]$baseDate).Days
     if ($span -le 0) { $span = 1 }
+    if ($nowDate -ne (Get-Date).ToString('yyyy-MM-dd')) {
+        Write-Host ("注意：最新快照是 {0}，今天还没打点，下面是截至那一天的增量。" -f $nowDate) -ForegroundColor Yellow
+        Write-Host ""
+    }
     Write-Host ("基线 {0} → 最新 {1}（实际跨度 {2} 天）" -f $baseDate, $nowDate, $span)
 
     $res = @()
