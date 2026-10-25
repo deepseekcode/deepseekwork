@@ -1,6 +1,6 @@
 # DeepSeekCode
 
-[English](README.md) · [简体中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Français](README.fr.md)
+[English](README.md) · [简体中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português](README.pt.md) · [Русский](README.ru.md) · [Italiano](README.it.md) · [العربية](README.ar.md) · [Bahasa Indonesia](README.id.md)
 
 **로컬 우선 AI 코딩 에이전트 — 로컬에서 도는 하나의 런타임이, 어떤 OpenAI 호환 모델로도 동작합니다.**
 
